@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        body
+         {
+        background-color: #000000;
+        font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+      </style>
+
+    <title>Document</title>
+</head>
+<body>
+    <!-- navbar -->
+    <div class='flex items-center justify-between p-4 z-[100] w-full absolute'>
+        <Link to='/'>
+          <h1 class='text-red-600 text-4xl font-bold cursor-pointer'>
+            NETFLIX
+          </h1>
+        </Link>
+          <div>
+            <Link to='/account'>
+              <button class='text-white pr-4'>Account</button>
+            </Link>
+            <button
+              onClick={handleLogout}
+              class='bg-red-600 px-6 py-2 rounded cursor-pointer text-white'
+            >
+              Logout
+            </button>
+          </div>
+        
+          <!-- <div>
+            <Link to='/login'>
+              <button class='text-white pr-4'>Sign In</button>
+            </Link>
+            <Link to='/signup'>
+              <button class='bg-red-600 px-6 py-2 rounded cursor-pointer text-white'>
+                Sign Up
+              </button>
+            </Link>
+          </div> -->
+    
+    </div>
+       
+      <div class='w-full h-[600px] text-white'>
+        <div class='w-full h-full'>
+          <div class='absolute w-full h-[600px] bg-gradient-to-r from-black'></div>
+          <img
+            id="main_image"
+            class='w-full h-full object-cover'
+          />
+          <div class='absolute w-full top-[20%] p-4 md:p-8'>
+            <h1 
+            id="title"
+            class='text-3xl md:text-5xl font-bold'></h1>
+            <div class='my-4'>
+              <button class='border bg-gray-300 text-black border-gray-300 py-2 px-5'>
+                Play
+              </button>
+              <button class='border text-white border-gray-300 py-2 px-5 ml-4'>
+                Watch Later
+              </button>
+            </div>
+            <p id="date" class='text-gray-400 text-sm'>
+              
+            </p>
+            <p id="description" class='w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-gray-200'>
+             
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="movies-container">
+        
+      </div>
+
+        <script type="module" src="./src/main.js"></script>
+</body>
+</html>
