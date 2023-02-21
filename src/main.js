@@ -1,14 +1,21 @@
 const apiKey = "ad5512039df6c4b5ab6c1e76d9584d54"
 
+const api = axios.create({
+  baseURL: "https://api.themoviedb.org/3",
+  headers: {
+    "Content-Type": "application/json;charset=utf-8",
+  },
+  params: {
+    "api_key": apiKey
+  }
+})
+
 const API = "https://api.themoviedb.org/3"
 const movie_id = 23
 
-const mainImage = document.getElementById('main_image')
-const title = document.getElementById('title')
-const year = document.getElementById('date')
-const description = document.getElementById('description')
-const moviesContainer = document.getElementById('movies-container')
-console.log(moviesContainer);
+
+
+// console.log(banner Wrapper);
 
 
 const truncatedString = (str, num) => {
@@ -21,11 +28,10 @@ const truncatedString = (str, num) => {
 
 
 const getRandomMovies = async (urlAPI) => {
-  const response = await fetch(`${urlAPI}/movie/popular?api_key=${apiKey}&language=en-US&page=1`,)
-  const data = await response.json()
+  const {data} = await axios.get(`${urlAPI}/movie/popular?api_key=${apiKey}&language=en-US&page=1`,)
+  // const data = await response.json()
   const movies = data.results
   const movie = movies[Math.floor(Math.random() * movies.length)];
-  console.log(movie)
 
 
   mainImage.setAttribute('src',`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`)
@@ -35,19 +41,25 @@ const getRandomMovies = async (urlAPI) => {
 
 }  
 
-const moviesView = (movies, titleClasification) => {
+const moviesView = (movies, titleClasification,container,prueba=false) => {
   const principal = document.createElement('div')
   principal.setAttribute("class", "relative flex items-center group");
+  principal.setAttribute("id", `${titleClasification}`)
 
 
   const titleName = document.createElement('p')
   titleName.setAttribute("class", "text-white font-bold md:text-xl p-4")
   titleName.textContent= `${titleClasification}`
-  moviesContainer.appendChild(titleName)
+  container.appendChild(titleName)
   const wrapper = document.createElement("div")
-  //w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative
-  wrapper.setAttribute("class", "w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative")
   
+  if(!prueba){
+    wrapper.setAttribute("class", "w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative")
+  }else{
+    wrapper.setAttribute("class", "w-full h-full md:px-12")
+  }
+  
+
   movies.map(movie=>{
 
     const moviesWrapper = document.createElement("div")
@@ -63,7 +75,7 @@ const moviesView = (movies, titleClasification) => {
     
     const titleText = document.createElement("p")
     titleText.setAttribute("class", "white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center")
-    titleText.textContent=`${movie?.title}`
+    titleText.textContent=`${movie?.title || movie?.name}` 
   
     titleWraper.appendChild(titleText)
     moviesWrapper.appendChild(img)
@@ -72,40 +84,45 @@ const moviesView = (movies, titleClasification) => {
     wrapper.appendChild(moviesWrapper)
   })
   principal.appendChild(wrapper)
-  moviesContainer.appendChild(principal)
+  container.appendChild(principal)
 }
 
 const geTopRatedMovies = async (urlAPI) => {
-  const response = await fetch(`${urlAPI}/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`,)
-  const data = await response.json()
+  const {data} = await axios.get(`${urlAPI}/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`,)
+  // const data = await response.json()
   const movies = data.results
-  moviesView(movies, "TopRatedd")
+  moviesView(movies, "TopRatedd",moviesContainer)
 }  
 const geTrendingMovies = async (urlAPI) => {
-  const response = await fetch(`${urlAPI}/movie/popular?api_key=${apiKey}&language=en-US&page=2`,)
-  const data = await response.json()
+  const {data} = await axios.get(`${urlAPI}/movie/popular?api_key=${apiKey}&language=en-US&page=2`,)
   const movies = data.results
-  moviesView(movies, "Trending")
+  moviesView(movies, "Trending",moviesContainer)
 }  
 const geHorrorMovies = async (urlAPI) => {
   const response = await fetch(`${urlAPI}/search/movie?api_key=${apiKey}&language=en-US&query=horror&page=1`,)
   const data = await response.json()
   const movies = data.results
-  moviesView(movies, "Horror")
+  moviesView(movies, "Horror",moviesContainer)
+  const horrorContainer = document.getElementById('Horror')
+  console.log(horrorContainer);
 } 
 const getUpComingMovies = async (urlAPI) => {
-  const response = await fetch(`${urlAPI}/movie/upcoming?api_key=${apiKey}&language=en-US&&page=1`,)
-  const data = await response.json()
+  const {data} = await axios.get(`${urlAPI}/movie/upcoming?api_key=${apiKey}&language=en-US&&page=1`,)
+  // const data = await response.json()
+  console.log({"comming":data});
   const movies = data.results
-  moviesView(movies, "UpComing")
+  moviesView(movies, "UpComing",moviesContainer)
 }  
 
-getRandomMovies(API)
-
-geTopRatedMovies(API)
-geTrendingMovies(API)
-geHorrorMovies(API)
-getUpComingMovies(API)
 
 
+
+
+const getTvShows = async (urlAPI) => {
+  const {data} = await axios.get(`${urlAPI}/discover/tv?api_key=${apiKey}&page=1`,)
+  // const data = await response.json()
+  console.log({"tvshos":data});
+  const movies = data.results
+  moviesView(movies, "tvshows",tvShowsContainer, true)
+}  
 
