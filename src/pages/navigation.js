@@ -1,7 +1,17 @@
 // const API = "https://api.themoviedb.org/3"
+
+function smoothscroll(){
+  const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  if (currentScroll > 0) {
+       window.requestAnimationFrame(smoothscroll);
+       window.scrollTo (0,currentScroll - (currentScroll/5));
+  }
+};
+
 const backHome = () => {
   location.hash = "home";
-  console.log("qecars");
+  // window.scrollTo(0, 0);
+  smoothscroll();
   homebutton.setAttribute("class", "headerLink cursor-default font-semibold text-white hover:text-white");
   tvShowsButoon.setAttribute("class", null)
   moviesButton.setAttribute("class", null)
@@ -11,10 +21,10 @@ const backHome = () => {
 const backTvShows = () => {
   location.hash = "tvshows";
   tvShowsButoon.setAttribute("class", "headerLink cursor-default font-semibold text-white hover:text-white");
-  moviesButton.classList("class",null)
-  newPopularButton.classList("class",null)
-  myListButton.classList("class",null)
-  homebutton.classList("class",null)
+  moviesButton.setAttribute("class",null)
+  newPopularButton.setAttribute("class",null)
+  myListButton.setAttribute("class",null)
+  homebutton.setAttribute("class",null)
 } 
 const backMovies = () => {
   location.hash = "movies";
@@ -25,7 +35,7 @@ const backMovies = () => {
   myListButton.setAttribute("class", null)
 }
 const backNewPopular = () => {
-  location.hash = "new-popular";
+  location.hash = "mods";
   newPopularButton.setAttribute("class", "headerLink cursor-default font-semibold text-white hover:text-white");
   homebutton.setAttribute("class", null);
   tvShowsButoon.setAttribute("class", null)
@@ -39,7 +49,17 @@ const backMylist = () => {
   moviesButton.setAttribute("class", null)
   newPopularButton.setAttribute("class", null)
 }
+const searchMovies = () => {
+  (searchFormInput.value !== "" )
+  ? location.hash = `search=${searchFormInput.value}`
+  :e.preventDefault()
+  homebutton.setAttribute("class", null)
+  moviesButton.setAttribute("class", null)
+  newPopularButton.setAttribute("class", null)
+  myListButton.setAttribute("class", null)
 
+  
+}
 
 
 const navigate = () => {
@@ -69,18 +89,42 @@ function homePage() {
   moviesContainer.classList.remove("pt-12");
   moviesContainer.classList.remove("hidden");
   tvShowsContainer.classList.add("hidden");
+  searchContainer.classList.add("hidden");
+  detailBannerWrapper.classList.add("hidden");
 }
 function moviesPage() {
   console.log("moviespage");
   moviesContainer.classList.remove("hidden");
   bannerWrapper.classList.add("hidden");
   moviesContainer.classList.add("pt-12"); 
+  tvShowsContainer.classList.add("hidden");
+  searchContainer.classList.add("hidden");
+  detailBannerWrapper.classList.add("hidden");
 }
 function moviePage() {
   console.log("movie");
+  tvShowsContainer.classList.add("hidden");
+  bannerWrapper.classList.add("hidden");
+  moviesContainer.classList.add("hidden");
+  searchContainer.classList.add("hidden");
+  detailBannerWrapper.classList.remove("hidden");
+
+  const [_,movieId] = location.hash.split("=")
+  getMovieDetail(API,movieId)
 }
 function searchPage() {
+  
   console.log("search");
+  searchContainer.classList.remove("hidden");
+  searchContainer.innerHTML=""
+  searchContainer.classList.add("pt-20");
+  moviesContainer.classList.add("hidden");
+  bannerWrapper.classList.add("hidden");
+  tvShowsContainer.classList.add("hidden");
+  detailBannerWrapper.classList.add("hidden");
+  const [_,query] = location.hash.split("=")
+  getSearchMovie(API,query)
+
 }
 function tvShowsPage() {
   getTvShows(API)
@@ -89,6 +133,8 @@ function tvShowsPage() {
   bannerWrapper.classList.add("hidden");
   moviesContainer.classList.add("pt-12");
   moviesContainer.classList.add("hidden");
+  searchContainer.classList.add("hidden");
+  detailBannerWrapper.classList.add("hidden");
   // trendingContainer.classList.add("hidden");
   // upCommingContainer.classList.add("hidden");
   // topRatedContainer.classList.add("hidden");

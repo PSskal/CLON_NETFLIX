@@ -5,6 +5,13 @@ const description = document.getElementById('description')
 const moviesContainer = document.getElementById('movies-container')
 const bannerWrapper = document.getElementById('bannerWrap')
 
+const detailImage = document.getElementById('main_image_details')
+console.log(detailImage);
+const detailTitle = document.getElementById('title_detail')
+const detailYear = document.getElementById('date_details')
+const detailDescription = document.getElementById('description_details')
+const detailBannerWrapper = document.getElementById('movieDetails')
+
 // moviesContanier
 
 const tvShowsContainer = document.getElementById('tvshows-container')
@@ -26,3 +33,10 @@ newPopularButton.addEventListener("click",backNewPopular);
 
 const myListButton = document.getElementById('my-list')
 myListButton.addEventListener("click",backMylist)
+
+const searchButton = document.getElementById('searchBtn')
+console.log(searchButton);
+searchButton.addEventListener("click", searchMovies)
+
+const searchContainer = document.getElementById('search-container')
+const searchFormInput = document.getElementById('searchForm')

@@ -64,7 +64,10 @@ const moviesView = (movies, titleClasification,container,prueba=false) => {
 
     const moviesWrapper = document.createElement("div")
     moviesWrapper.setAttribute("class", "w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2")
-  
+    moviesWrapper.addEventListener("click", ()=>{
+      location.hash = `#movie=${movie.id}`
+    })  
+
     const img = document.createElement("img")
     img.setAttribute("src",`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`)
     img.setAttribute("class", "w-full h-auto block")
@@ -116,8 +119,6 @@ const getUpComingMovies = async (urlAPI) => {
 
 
 
-
-
 const getTvShows = async (urlAPI) => {
   const {data} = await axios.get(`${urlAPI}/discover/tv?api_key=${apiKey}&page=1`,)
   // const data = await response.json()
@@ -126,3 +127,31 @@ const getTvShows = async (urlAPI) => {
   moviesView(movies, "tvshows",tvShowsContainer, true)
 }  
 
+const getSearchMovie = async (urlAPI, query) => {
+  const {data} = await axios.get(`${urlAPI}/search/movie`,{
+    params: {
+      api_key: apiKey,
+      query,
+      page: 1
+    },
+  })
+  
+  console.log({"search":data});
+  const movies = data.results
+  moviesView(movies, query, searchContainer, true)
+}  
+
+
+
+const getMovieDetail = async (urlAPI, movieId) => {
+  const {data} = await axios.get(`${urlAPI}/movie/${movieId}?api_key=${apiKey}`,)
+  // const data = await response.json()
+  const movie = data
+  console.log({"detail":movie});
+
+  detailImage.setAttribute('src',`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`)
+  detailTitle.textContent = movie?.title
+  detailYear.textContent = `Released: ${movie?.release_date}`
+  detailDescription.textContent = truncatedString(movie?.overview, 150)
+
+}  

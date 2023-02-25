@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <style type="text/tailwindcss">
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         body
@@ -41,7 +42,13 @@
     </div>
     <div class="flex items-center space-x-4 text-sm font-light">
       <!-- <SearchIcon class="sm hidden h-6 w-6 sm:inline" /> -->
-      <p class="hidden lg:inline text-gray-400">Kids</p>
+      <form  class="bg-black  block w-full" >
+        <input id="searchForm" type="text" class="p-2.5 bg-gray-800 border border-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Search">
+        <button id="searchBtn">
+          <i class="fa-solid fa-search text-[1.5rem] text-white opacity-60 hover:opacity-100"></i>
+        </button>
+      </form>
+        <p class="hidden lg:inline text-gray-400">Kids</p>
       <!-- <BellIcon class="h-6 w-6" /> -->
       <Link href="/account">
         <img
@@ -87,6 +94,36 @@
 
       <div id="movies-container">  </div>
       <div id="tvshows-container">  </div>
+      <div id="search-container">  </div>
+
+      <div class='w-full h-[600px] text-white' id="movieDetails">
+        <div class='w-full h-full'>
+          <div class='absolute w-full h-[600px] bg-gradient-to-r from-black'></div>
+          <img
+            id="main_image_details"
+            class='w-full h-full object-cover'
+          />
+          <div class='absolute w-full top-[20%] p-4 md:p-8'>
+            <h1 
+            id="title_detail"
+            class='text-3xl md:text-5xl font-bold'></h1>
+            <div class='my-4'>
+              <button class='border rounded-md bg-gray-300 text-black border-gray-300 py-2 px-5'>
+                Play
+              </button>
+              <button class='border rounded-md text-white border-gray-300 py-2 px-5 ml-4'>
+                Watch Later
+              </button>
+            </div>
+            <p id="date_details" class='text-gray-400 text-sm'>
+              
+            </p>
+            <p id="description_details" class='w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-gray-200'>
+             
+            </p>
+          </div>
+        </div>
+      </div>
 
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./src/main.js"></script>
